@@ -1,14 +1,17 @@
-package de.tekup.studentsabsence.repositories;
+paquet  de . tekup . absence des étudiants . dépôts ;
 
-import de.tekup.studentsabsence.entities.Group;
-import de.tekup.studentsabsence.entities.GroupSubject;
-import de.tekup.studentsabsence.entities.GroupSubjectKey;
-import org.springframework.data.repository.CrudRepository;
+        importer  de . tekup . absence des étudiants . entités . Groupe ;
+        importer  de . tekup . absence des étudiants . entités . GroupSubject ;
+        importer  de . tekup . absence des étudiants . entités . GroupSubjectKey ;
+        importer  de . tekup . absence des étudiants . entités . Sujet ;
+        org d'importation . cadre de ressort . données . référentiel . CrudRepository ;
 
-import java.util.List;
-import java.util.Optional;
+        importer  java . util . Liste ;
+        importer  java . util . Facultatif ;
 
-public interface GroupSubjectRepository extends CrudRepository<GroupSubject, GroupSubjectKey> {
-    List<GroupSubject> findAllByGroup(Group id);
-    ///TODO create a methode to find a groupSubject by Group Id and Subject Id
-}
+interface  publique GroupSubjectRepository  étend  CrudRepository < GroupSubject , GroupSubjectKey > {
+        List < GroupSubject > findAllByGroup ( ID de groupe  );
+        ///TODO créer une méthode pour trouver un groupSubject par Group Id et Subject Id
+
+        List < GroupSubject > findGroupSubjectByGroupIdAndSubjectId ( Group  id , Subject  sid );
+        }

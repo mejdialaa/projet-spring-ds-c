@@ -1,36 +1,44 @@
-package de.tekup.studentsabsence.entities;
+paquet  de . tekup . absence des étudiants . entités ;
 
-import de.tekup.studentsabsence.enums.LevelEnum;
-import de.tekup.studentsabsence.enums.SpecialityEnum;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+        importer  de . tekup . absence des étudiants . énumérations . LevelEnum ;
+        importer  de . tekup . absence des étudiants . énumérations . SpecialityEnum ;
+        importer  lombok . AllArgsConstructor ;
+        importer  lombok . Données ;
+        importer  lombok . NoArgsConstructor ;
+        importer  lombok . ToString ;
 
-import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-@Entity
-@Data
-@ToString(exclude = "students")
-@AllArgsConstructor
-@NoArgsConstructor
-@Table(name = "_group")
-public class Group {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    @NotBlank(message = "Name is required")
-    private String name;
-    @NotBlank(message = "Label is required")
-    private String label;
-    @Enumerated(EnumType.STRING)
-    private LevelEnum level;
-    @NotNull(message = "Speciality is required")
-    @Enumerated(EnumType.STRING)
-    private SpecialityEnum speciality;
-    //TODO Complete Relations with other entities
+        importer  javax . persistance .*;
+        importer  javax . validation . contraintes . NonVide ;
+        importer  javax . validation . contraintes . NonNull ;
+        importer  java . util . ArrayList ;
+        importer  java . util . Liste ;
+
+@ Entité
+@ Données
+@ ToString ( exclure = "étudiants" )
+@ AllArgsConstructor
+@ NoArgsConstructor
+@ Table ( nom = "_group" )
+ Groupe de classe  publique {
+@ identifiant
+@ GeneratedValue ( stratégie = GenerationType . IDENTITY )
+     ID long  privé ;
+@ NotBlank ( message = "Le nom est requis" )
+     nom de chaîne  privé ;
+@ NotBlank ( message = "Le libellé est requis" )
+     étiquette de chaîne  privée ;
+@ Énuméré ( EnumType . STRING )
+     niveau LevelEnum  privé ;
+@ NotNull ( message = "La spécialité est requise" )
+@ Énuméré ( EnumType . STRING )
+     spécialité privée SpecialityEnum  ;
+//TODO Terminer les relations avec d'autres entités
+
+@ OneToMany ( mappedBy = "group" , fetch = FetchType . LAZY , cascade = CascadeType . MERGE )
+public  List < Étudiant > étudiants = new  ArrayList <>();
+
+@ OneToMany ( mappedBy = "group" , fetch = FetchType . LAZY , cascade = CascadeType . MERGE )
+public  List < GroupSubject > groupSubjects = new  ArrayList <>();
 
 
-
-}
+        }

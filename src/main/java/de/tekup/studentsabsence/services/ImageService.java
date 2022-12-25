@@ -1,12 +1,13 @@
-package de.tekup.studentsabsence.services;
+paquet  de . tekup . absence des étudiants . services ;
 
-import de.tekup.studentsabsence.entities.Image;
-import org.springframework.web.multipart.MultipartFile;
+        importer  de . tekup . absence des étudiants . entités . Image ;
+        importer  de . tekup . absence des étudiants . entités . Étudiant ;
+        org d'importation . cadre de ressort . Web . en plusieurs parties . MultipartFile ;
 
-import java.io.IOException;
+        importer  java . io . IOException ;
 
-public interface ImageService {
-    Image getImage(String id);
+interface  publique ImageService {
+    Image  getImage ( ID de chaîne  );
 
-    Image addImage(MultipartFile image) throws IOException;
+    Image  addImage ( image MultipartFile  , étudiant étudiant ) lève IOException ;
 }

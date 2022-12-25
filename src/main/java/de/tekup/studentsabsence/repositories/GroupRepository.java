@@ -1,7 +1,7 @@
-package de.tekup.studentsabsence.repositories;
+paquet  de . tekup . absence des étudiants . dépôts ;
 
-import de.tekup.studentsabsence.entities.Group;
-import org.springframework.data.repository.CrudRepository;
+        importer  de . tekup . absence des étudiants . entités . Groupe ;
+        org d'importation . cadre de ressort . données . référentiel . CrudRepository ;
 
-public interface GroupRepository extends CrudRepository<Group, Long> {
-}
+interface  publique GroupRepository  étend  CrudRepository < Group , Long > {
+        }

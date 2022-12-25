@@ -1,7 +1,11 @@
-package de.tekup.studentsabsence.repositories;
+paquet  de . tekup . absence des étudiants . dépôts ;
 
-import de.tekup.studentsabsence.entities.Image;
-import org.springframework.data.repository.CrudRepository;
+        importer  de . tekup . absence des étudiants . entités . Image ;
+        org d'importation . cadre de ressort . données . référentiel . CrudRepository ;
 
-public interface ImageRepository extends CrudRepository<Image, String> {
-}
+        importer  java . util . Liste ;
+
+interface  publique ImageRepository  étend  CrudRepository < Image , String > {
+
+        Image  findImageBy ( ID de chaîne  ) ;
+        }

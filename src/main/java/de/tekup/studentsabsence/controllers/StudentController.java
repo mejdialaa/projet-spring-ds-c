@@ -1,111 +1,106 @@
 package de.tekup.studentsabsence.controllers;
 
-import de.tekup.studentsabsence.entities.Image;
-import de.tekup.studentsabsence.entities.Student;
-import de.tekup.studentsabsence.services.GroupService;
-import de.tekup.studentsabsence.services.ImageService;
-import de.tekup.studentsabsence.services.StudentService;
-import lombok.AllArgsConstructor;
-import org.apache.tomcat.util.http.fileupload.IOUtils;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
+        importer  javax . servlet . http . HttpServletResponse ;
+        importer  javax . validation . Valide ;
+        importer  java . io . ByteArrayInputStream ;
+        importer  java . io . IOException ;
+        importer  java . io . InputStream ;
+        importer  java . util . Liste ;
 
-import javax.servlet.http.HttpServletResponse;
-import javax.validation.Valid;
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.List;
+@ Contrôleur
+@ AllArgsConstructor
+@ RequestMapping ( "/étudiants" )
+ classe  publique StudentController {
+         finale  privée StudentService  StudentService ;
+         privé  final  GroupService  groupService ;
+        ImageService final  privé imageService ;
 
-@Controller
-@AllArgsConstructor
-@RequestMapping("/students")
-public class StudentController {
-    private final StudentService studentService;
-    private final GroupService groupService;
-    private final ImageService imageService;
-
-    @GetMapping({"", "/"})
-    public String index(Model model) {
-        List<Student> students = studentService.getAllStudents();
-        model.addAttribute("students", students);
-        return "students/index";
-    }
-
-    @GetMapping("/add")
-    public String addView(Model model) {
-        model.addAttribute("student", new Student());
-        model.addAttribute("groups", groupService.getAllGroups());
-        return "students/add";
-    }
-
-    @PostMapping("/add")
-    public String add(@Valid Student student, BindingResult bindingResult, Model model) {
-        if(bindingResult.hasErrors()) {
-            model.addAttribute("groups", groupService.getAllGroups());
-            return "students/add";
+@ GetMapping ({ "" , "/" })
+public  String  index ( Model  model ) {
+        Liste < Étudiant > étudiants = étudiantService . getAllStudents ();
+        modèle . addAttribute ( "étudiants" , étudiants );
+        retourne  "étudiants/index" ;
         }
 
-        studentService.addStudent(student);
-        return "redirect:/students";
-    }
-
-    @GetMapping("/{sid}/update")
-    public String updateView(@PathVariable Long sid, Model model) {
-        model.addAttribute("student", studentService.getStudentBySid(sid));
-        model.addAttribute("groups", groupService.getAllGroups());
-        return "students/update";
-    }
-
-    @PostMapping("/{sid}/update")
-    public String update(@PathVariable Long sid, @Valid Student student, BindingResult bindingResult, Model model) {
-        if(bindingResult.hasErrors()) {
-            model.addAttribute("groups", groupService.getAllGroups());
-            return "students/update";
+@ GetMapping ( "/ajouter" )
+public  String  addView ( Modèle de  modèle ) {
+        modèle . addAttribute ( "étudiant" , nouvel  étudiant ());
+        modèle . addAttribute ( "groups" , groupService . getAllGroups ());
+        retourne  "élèves/ajouter" ;
         }
 
-        studentService.updateStudent(student);
-        return "redirect:/students";
-    }
-
-    @GetMapping("/{sid}/delete")
-    public String delete(@PathVariable Long sid) {
-        studentService.deleteStudent(sid);
-        return "redirect:/students";
-    }
-
-    @GetMapping("/{sid}/show")
-    public String show(Model model, @PathVariable Long sid) {
-        model.addAttribute("student", studentService.getStudentBySid(sid));
-        return "students/show";
-    }
-
-    @GetMapping("/{sid}/add-image")
-    public String addImageView(@PathVariable Long sid, Model model) {
-        model.addAttribute("student", studentService.getStudentBySid(sid));
-        return "students/add-image";
-    }
-
-    @PostMapping("/{sid}/add-image")
-    //TODO complete the parameters of this method
-    public String addImage() {
-        //TODO complete the body of this method
-        return "redirect:/students";
-    }
-
-    @RequestMapping(value = "/{sid}/display-image")
-    public void getStudentPhoto(HttpServletResponse response, @PathVariable("sid") long sid) throws Exception {
-        Student student = studentService.getStudentBySid(sid);
-        Image image = student.getImage();
-
-        if(image != null) {
-            response.setContentType(image.getFileType());
-            InputStream inputStream = new ByteArrayInputStream(image.getData());
-            IOUtils.copy(inputStream, response.getOutputStream());
+@ PostMapping ( "/ajouter" )
+public  String  add ( @ étudiant étudiant valide  , BindingResult bindingResult , modèle modèle ) {
+        si ( bindingResult . hasErrors ()) {
+        modèle . addAttribute ( "groups" , groupService . getAllGroups ());
+        retourne  "élèves/ajouter" ;
         }
-    }
 
-}
+        StudentService . addStudent ( étudiant );
+        return  "redirect:/students" ;
+        }
+
+@ GetMapping ( "/{sid}/mise à jour" )
+public  String  updateView ( @ PathVariable  Long  sid , Model  model ) {
+        modèle . addAttribute ( "student" , studentService . getStudentBySid ( sid ));
+        modèle . addAttribute ( "groups" , groupService . getAllGroups ());
+        renvoie  "étudiants/mise à jour" ;
+        }
+
+@ PostMapping ( "/{sid}/mise à jour" )
+public  String  update ( @ PathVariable  Long  sid , @ Valid  Student  student , BindingResult  bindingResult , Model  model ) {
+        si ( bindingResult . hasErrors ()) {
+        modèle . addAttribute ( "groups" , groupService . getAllGroups ());
+        renvoie  "étudiants/mise à jour" ;
+        }
+
+        StudentService . mettre à jourÉtudiant ( étudiant );
+        return  "redirect:/students" ;
+        }
+
+@ GetMapping ( "/{sid}/delete" )
+public  String  delete ( @ PathVariable  Long  sid ) {
+        StudentService . supprimerÉtudiant ( sid );
+        return  "redirect:/students" ;
+        }
+
+@ GetMapping ( "/{sid}/show" )
+public  String  show ( Model  model , @ PathVariable  Long  sid ) {
+        modèle . addAttribute ( "student" , studentService . getStudentBySid ( sid ));
+        retourne  "élèves/spectacle" ;
+        }
+
+@ GetMapping ( "/{sid}/add-image" )
+public  String  addImageView ( @ PathVariable  Long  sid , Model  model ) {
+        modèle . addAttribute ( "student" , studentService . getStudentBySid ( sid ));
+        return  "étudiants/ajouter-image" ;
+        }
+
+public  String  addImage ( @ PathVariable  Long  sid , image MultipartFile  ) {
+        //TODO complète le corps de cette méthode
+        Étudiant  étudiant = serviceétudiant . getStudentBySid ( sid );
+        essayer {
+        Image  img = imageService . addImage ( image , étudiant );
+
+        étudiant . setImage ( img );
+        Étudiant  stu = étudiantService . mettre à jourÉtudiant ( étudiant );
+        } catch ( Exception  e ){
+        Système . dehors . println ( " Erreur " + e . toString ());
+        return  "étudiants/ajouter-image" ;
+        }
+        return  "redirect:/students" ;
+        }
+
+@ RequestMapping ( valeur = "/{sid}/display-image" )
+public  void  getStudentPhoto ( réponse HttpServletResponse  , @ PathVariable ( "sid" ) long sid ) lance une exception {
+        Étudiant  étudiant = serviceétudiant . getStudentBySid ( sid );
+        Image  image = étudiant . getImage ();
+
+        si ( image != null ) {
+        réponse . setContentType ( image . getFileType ());
+        InputStream  inputStream = new  ByteArrayInputStream ( image . getData ());
+        IOUtils . copie ( inputStream , réponse . getOutputStream ());
+        }
+        }
+
+        }

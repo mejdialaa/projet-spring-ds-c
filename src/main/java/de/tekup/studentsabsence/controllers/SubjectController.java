@@ -1,76 +1,76 @@
-package de.tekup.studentsabsence.controllers;
+paquet  de . tekup . absence des étudiants . contrôleurs ;
 
-import de.tekup.studentsabsence.entities.Subject;
-import de.tekup.studentsabsence.services.SubjectService;
-import lombok.AllArgsConstructor;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+        importer  de . tekup . absence des étudiants . entités . Sujet ;
+        importer  de . tekup . absence des étudiants . services . ServiceSujet ;
+        importer  lombok . AllArgsConstructor ;
+        org d'importation . cadre de ressort . stéréotype . Contrôleur ;
+        org d'importation . cadre de ressort . ui . Modèle ;
+        org d'importation . cadre de ressort . validation . BindingResult ;
+        org d'importation . cadre de ressort . Web . lier . annotation . GetMapping ;
+        org d'importation . cadre de ressort . Web . lier . annotation . VariableChemin ;
+        org d'importation . cadre de ressort . Web . lier . annotation . PostMapping ;
+        org d'importation . cadre de ressort . Web . lier . annotation . RequestMapping ;
 
-import javax.validation.Valid;
-import java.util.List;
+        importer  javax . validation . Valide ;
+        importer  java . util . Liste ;
 
 
-@Controller
-@RequestMapping("/subjects")
-@AllArgsConstructor
-public class SubjectController {
-    private final SubjectService subjectService;
+@ Contrôleur
+@ RequestMapping ( "/sujets" )
+@ AllArgsConstructor
+public  class  SubjectController {
+    private  final  SubjectService  subjectService ;
 
-    @GetMapping({"", "/"})
-    public String index(Model model) {
-        List<Subject> subjects = subjectService.getAllSubjects();
-        model.addAttribute("subjects", subjects);
-        return "subjects/index";
+    @ GetMapping ({ "" , "/" })
+    public  String  index ( Model  model ) {
+        Liste < Sujet > sujets = sujetService . getAllSubjects ();
+        modèle . addAttribute ( "sujets" , sujets );
+        retourne  "sujets/index" ;
     }
 
-    @GetMapping("/add")
-    public String addView(Model model) {
-        model.addAttribute("subject", new Subject());
-        return "subjects/add";
+    @ GetMapping ( "/ajouter" )
+    public  String  addView ( Modèle de  modèle ) {
+        modèle . addAttribute ( "sujet" , nouveau  Sujet ());
+        return  "sujets/ajouter" ;
     }
 
-    @PostMapping("/add")
-    public String add(@Valid Subject subject, BindingResult bindingResult) {
-        if(bindingResult.hasErrors()) {
-            return "subjects/add";
+    @ PostMapping ( "/ajouter" )
+    public  String  add ( @ Valid  Subject  subject , BindingResult  bindingResult ) {
+        si ( bindingResult . hasErrors ()) {
+            return  "sujets/ajouter" ;
         }
 
-        subjectService.addSubject(subject);
-        return "redirect:/subjects";
+        sujetService . addSubject ( sujet );
+        return  "redirect:/sujets" ;
     }
 
-    @GetMapping("/{id}/update")
-    public String updateView(@PathVariable Long id, Model model) {
-        model.addAttribute("subject", subjectService.getSubjectById(id));
-        return "subjects/update";
+    @ GetMapping ( "/{id}/mise à jour" )
+    public  String  updateView ( @ PathVariable  Long  id , Model  model ) {
+        modèle . addAttribute ( "subject" , subjectService . getSubjectById ( id ));
+        retourne  "sujets/mise à jour" ;
     }
 
-    @PostMapping("/{id}/update")
-    public String update(@PathVariable Long id, @Valid Subject subject, BindingResult bindingResult) {
-        if(bindingResult.hasErrors()) {
-            return "subjects/update";
+    @ PostMapping ( "/{id}/mise à jour" )
+    public  String  update ( @ PathVariable  Long  id , @ Valid  Subject  subject , BindingResult  bindingResult ) {
+        si ( bindingResult . hasErrors ()) {
+            retourne  "sujets/mise à jour" ;
         }
 
-        subjectService.updateSubject(subject);
-        return "redirect:/subjects";
+        sujetService . updateSubject ( sujet );
+        return  "redirect:/sujets" ;
     }
 
-    @GetMapping("/{id}/delete")
-    public String delete(@PathVariable Long id) {
+    @ GetMapping ( "/{id}/delete" )
+    public  String  delete ( @ PathVariable  Long  id ) {
 
-        subjectService.deleteSubject(id);
-        return "redirect:/subjects";
+        sujetService . deleteSubject ( id );
+        return  "redirect:/sujets" ;
     }
 
-    @GetMapping("/{id}/show")
-    public String show(@PathVariable Long id, Model model) {
-        model.addAttribute("subject", subjectService.getSubjectById(id));
-        return "subjects/show";
+    @ GetMapping ( "/{id}/show" )
+    public  String  show ( @ PathVariable  Long  id , Model  model ) {
+        modèle . addAttribute ( "subject" , subjectService . getSubjectById ( id ));
+        retourne  "sujets/show" ;
     }
 
 

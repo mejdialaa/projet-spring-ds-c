@@ -1,106 +1,101 @@
-package de.tekup.studentsabsence.controllers;
+paquet  de . tekup . absence des étudiants . contrôleurs ;
 
-        importer  javax . servlet . http . HttpServletResponse ;
+        importer  de . tekup . absence des étudiants . entités . Groupe ;
+        importer  de . tekup . absence des étudiants . entités . Étudiant ;
+        importer  de . tekup . absence des étudiants . entités . Sujet ;
+        importer  de . tekup . absence des étudiants . services . Service de messagerie ;
+        importer  de . tekup . absence des étudiants . services . GroupSubjectService ;
+        importer  de . tekup . absence des étudiants . services . Service aux étudiants ;
+        importer  de . tekup . absence des étudiants . services . ServiceSujet ;
+        importer  lombok . AllArgsConstructor ;
+        org d'importation . cadre de ressort . stéréotype . Contrôleur ;
+        org d'importation . cadre de ressort . ui . Modèle ;
+        org d'importation . cadre de ressort . validation . BindingResult ;
+        org d'importation . cadre de ressort . Web . lier . annotation . GetMapping ;
+        org d'importation . cadre de ressort . Web . lier . annotation . VariableChemin ;
+        org d'importation . cadre de ressort . Web . lier . annotation . PostMapping ;
+        org d'importation . cadre de ressort . Web . lier . annotation . RequestMapping ;
+
         importer  javax . validation . Valide ;
-        importer  java . io . ByteArrayInputStream ;
-        importer  java . io . IOException ;
-        importer  java . io . InputStream ;
+        importer  java . util . ArrayList ;
         importer  java . util . Liste ;
 
+
 @ Contrôleur
+@ RequestMapping ( "/sujets" )
 @ AllArgsConstructor
-@ RequestMapping ( "/étudiants" )
- classe  publique StudentController {
-         finale  privée StudentService  StudentService ;
-         privé  final  GroupService  groupService ;
-        ImageService final  privé imageService ;
+public  class  SubjectController {
+    private  final  SubjectService  subjectService ;
+    privé   final  GroupSubjectService  groupSubjectService ;
+    finale  privée StudentService  StudentService ;
+    emailService final  privé EmailService ;
 
-@ GetMapping ({ "" , "/" })
-public  String  index ( Model  model ) {
-        Liste < Étudiant > étudiants = étudiantService . getAllStudents ();
-        modèle . addAttribute ( "étudiants" , étudiants );
-        retourne  "étudiants/index" ;
-        }
+    @ GetMapping ({ "" , "/" })
+    public  String  index ( Model  model ) {
+        Liste < Sujet > sujets = sujetService . getAllSubjects ();
+        modèle . addAttribute ( "sujets" , sujets );
+        retourne  "sujets/index" ;
+    }
 
-@ GetMapping ( "/ajouter" )
-public  String  addView ( Modèle de  modèle ) {
-        modèle . addAttribute ( "étudiant" , nouvel  étudiant ());
-        modèle . addAttribute ( "groups" , groupService . getAllGroups ());
-        retourne  "élèves/ajouter" ;
-        }
+    @ GetMapping ( "/ajouter" )
+    public  String  addView ( Modèle de  modèle ) {
+        modèle . addAttribute ( "sujet" , nouveau  Sujet ());
+        return  "sujets/ajouter" ;
+    }
 
-@ PostMapping ( "/ajouter" )
-public  String  add ( @ étudiant étudiant valide  , BindingResult bindingResult , modèle modèle ) {
+    @ PostMapping ( "/ajouter" )
+    public  String  add ( @ Valid  Subject  subject , BindingResult  bindingResult ) {
         si ( bindingResult . hasErrors ()) {
-        modèle . addAttribute ( "groups" , groupService . getAllGroups ());
-        retourne  "élèves/ajouter" ;
+            return  "sujets/ajouter" ;
         }
 
-        StudentService . addStudent ( étudiant );
-        return  "redirect:/students" ;
-        }
+        sujetService . addSubject ( sujet );
+        return  "redirect:/sujets" ;
+    }
 
-@ GetMapping ( "/{sid}/mise à jour" )
-public  String  updateView ( @ PathVariable  Long  sid , Model  model ) {
-        modèle . addAttribute ( "student" , studentService . getStudentBySid ( sid ));
-        modèle . addAttribute ( "groups" , groupService . getAllGroups ());
-        renvoie  "étudiants/mise à jour" ;
-        }
+    @ GetMapping ( "/{id}/mise à jour" )
+    public  String  updateView ( @ PathVariable  Long  id , Model  model ) {
+        modèle . addAttribute ( "subject" , subjectService . getSubjectById ( id ));
+        retourne  "sujets/mise à jour" ;
+    }
 
-@ PostMapping ( "/{sid}/mise à jour" )
-public  String  update ( @ PathVariable  Long  sid , @ Valid  Student  student , BindingResult  bindingResult , Model  model ) {
+    @ PostMapping ( "/{id}/mise à jour" )
+    public  String  update ( @ PathVariable  Long  id , @ Valid  Subject  subject , BindingResult  bindingResult ) {
         si ( bindingResult . hasErrors ()) {
-        modèle . addAttribute ( "groups" , groupService . getAllGroups ());
-        renvoie  "étudiants/mise à jour" ;
+            retourne  "sujets/mise à jour" ;
         }
 
-        StudentService . mettre à jourÉtudiant ( étudiant );
-        return  "redirect:/students" ;
-        }
+        sujetService . updateSubject ( sujet );
+        return  "redirect:/sujets" ;
+    }
 
-@ GetMapping ( "/{sid}/delete" )
-public  String  delete ( @ PathVariable  Long  sid ) {
-        StudentService . supprimerÉtudiant ( sid );
-        return  "redirect:/students" ;
-        }
+    @ GetMapping ( "/{id}/delete" )
+    public  String  delete ( @ PathVariable  Long  id ) {
 
-@ GetMapping ( "/{sid}/show" )
-public  String  show ( Model  model , @ PathVariable  Long  sid ) {
-        modèle . addAttribute ( "student" , studentService . getStudentBySid ( sid ));
-        retourne  "élèves/spectacle" ;
-        }
-
-@ GetMapping ( "/{sid}/add-image" )
-public  String  addImageView ( @ PathVariable  Long  sid , Model  model ) {
-        modèle . addAttribute ( "student" , studentService . getStudentBySid ( sid ));
-        return  "étudiants/ajouter-image" ;
-        }
-
-public  String  addImage ( @ PathVariable  Long  sid , image MultipartFile  ) {
-        //TODO complète le corps de cette méthode
+        sujetService . deleteSubject ( id );
+        return  "redirect:/sujets" ;
+    }
+    @ GetMapping ( "/{id}/show" )
+    public  String  show ( @ PathVariable  Long  id , Model  model ) {
+        //Question 2
+        Liste < Groupe > groupes = new  ArrayList <>();
+        groupSubjectService . getSubjectsGroupBySubjectId ( id ). forEach ( groupSubject -> groupes . add ( groupSubject . getGroup ()));
+        modèle . addAttribute ( "subject" , subjectService . getSubjectById ( id ));
+        modèle . addAttribute ( "groupes" , groupes );
+        modèle . addAttribute ( "subjectService" , subjectService );
+        retourne  "sujets/show" ;
+    }
+    //question 2 envoyer un mail
+    @ GetMapping ( "/Mail/{sid}/{sbid}" )
+    public  String  sendMail ( @ PathVariable  Long  sid , @ PathVariable  Long  sbid ){
+        Sujet  sujet = sujetService . getSubjectById ( sbid );
         Étudiant  étudiant = serviceétudiant . getStudentBySid ( sid );
-        essayer {
-        Image  img = imageService . addImage ( image , étudiant );
+        service de messagerie . sendEEmail ( étudiant , sujet );
+        return  "redirect:/sujets/" + sbid + "/show" ;
+    }
 
-        étudiant . setImage ( img );
-        Étudiant  stu = étudiantService . mettre à jourÉtudiant ( étudiant );
-        } catch ( Exception  e ){
-        Système . dehors . println ( " Erreur " + e . toString ());
-        return  "étudiants/ajouter-image" ;
-        }
-        return  "redirect:/students" ;
-        }
 
-@ RequestMapping ( valeur = "/{sid}/display-image" )
-public  void  getStudentPhoto ( réponse HttpServletResponse  , @ PathVariable ( "sid" ) long sid ) lance une exception {
-        Étudiant  étudiant = serviceétudiant . getStudentBySid ( sid );
-        Image  image = étudiant . getImage ();
 
-        si ( image != null ) {
-        réponse . setContentType ( image . getFileType ());
-        InputStream  inputStream = new  ByteArrayInputStream ( image . getData ());
-        IOUtils . copie ( inputStream , réponse . getOutputStream ());
-        }
-        }
 
-        }
+
+}

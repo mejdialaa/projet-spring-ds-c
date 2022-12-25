@@ -1,45 +1,84 @@
-<!doctype html>
-<html lang="en"
-      layout:decorate="~{layout}"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
-<head>
-    <meta charset="UTF-8">
-    <meta content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
-          name="viewport">
-    <meta content="ie=edge" http-equiv="X-UA-Compatible">
-    <title>INDEX</title>
-</head>
-<body>
-<div layout:fragment="content">
-    <div class="row">
-        <div class="col-md-12">
-            <div class="card">
-                <div class="card-header card-header-primary card-header-icon">
-                    <div class="card-icon">
-                        <i class="material-icons">supervised_user_circle</i>
-                    </div>
-                    <h4 class="card-title">SHOW SUBJECT</h4>
-                </div>
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="card">
-                                <div class="card-body table-responsive">
-                                    <table class="table table-hover">
-                                        <tbody>
-                                        <tr><td class="text-primary"><strong>Name:</strong></td> <td><span th:text="${subject.name}"></span></td></tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-</div>
-</div>
-</body>
-</html>
+<!doctypehtml >
+< html  lang =" fr "
+mise en page : décorer =" ~{mise en page} "
+xmlns:layout =" http://www.ultraq.net.nz/thymeleaf/layout " >
+< tête >
+< jeu de caractères méta  =" UTF-8 " >
+< meta  content =" width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0 "
+nom =" fenêtre d'affichage " >
+< meta  content =" ie=edge " http-equiv =" X-UA-Compatible " >
+< titre > INDEX </ titre >
+</ tête >
+< corps >
+< div  mise en page : fragment =" contenu " >
+< classe div  =" ligne " >
+< div  class =" col-md-12 " >
+< div  class =" carte " >
+< div  class =" card-header card-header-primary card-header-icon " >
+< div  class =" icône-carte " >
+< i  class =" material-icons " > cercle_utilisateur_supervisé </ i >
+</ div >
+< h4  class =" card-title " > AFFICHER LE SUJET </ h4 >
+</ div >
+< div  class =" corps de la carte " >
+< classe div  =" ligne " >
+< div  class =" col-md-6 " >
+< div  class =" carte " >
+< div  class =" card-body table-responsive " >
+< table  class =" table table-hover " >
+< personne >
+< tr > < td  class =" text-primary " > < strong > Nom : </ strong > </ td >  < td > < span  th:text =" ${subject.name} " > </ span > </ td > </ tr >
+</ tbody >
+</ table >
+</ div >
+</ div >
+</ div >
+</ div >
+
+
+< div  class =" row " th:each =" group:${groups} "
+th:with =" gid=${group.id} " >
+< div  class =" col-md-12 " >
+< div  class =" carte " >
+< div  class =" card-header card-header-text card-header-primary " >
+< div  class =" texte-carte " >
+< h4  class =" card-title " th:text =" ${group.name}+' '+'Éliminer les étudiants' " > </ h4 >
+</ div >
+</ div >
+< div  class =" card-body table-responsive " >
+< table  class =" table table-hover " >
+< tête >
+< th  class =" text-primary " > Nom de l'élève </ th >
+< th  class =" text-primary " > Groupe d'étudiants </ th >
+< th  class =" text-primary " > Envoyer un e-mail </ th >
+</ tête >
+< tr  th:each =" étudiant : ${group.getStudents()} "
+th:if =" ${subjectService.eliminatedStudentByGroup(subject.id,group.id,student.sid) == true} " >
+
+< td  th:text =" ${student.firstName+' '+student.lastName} " > </ td >
+< td  th:text =" ${group.name} " > </ td >
+< td >
+< une  classe =" btn btn-link btn-primary btn-just-icon remove "
+th:href =" @{/subjects/Mail/{sid}/{sbid} (sid=${student.sid}, sbid=${subject.id})} "
+> < i  class =" material-icons " > E- mail </ i > </ a >
+</ td >
+</ tr  >
+
+</ table >
+</ div >
+</ div >
+</ div >
+</ div >
+
+
+
+
+</ div >
+</ div >
+</ div >
+</ div >
+</ div >
+</ div >
+</ div >
+</ corps >
+</ html >
